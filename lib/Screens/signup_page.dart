@@ -82,7 +82,11 @@ class _SignUpState extends State<SignUp> {
                     showSpinner = true;
                   });
                   try {
-                    final user = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                    final user = await _auth.createUserWithEmailAndPassword(email: email, password: password).catchError((err) {
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog();
+                      });
+                    });
 
                     if (user != null) {
                       Navigator.pushNamed(context, MainScreen.page);
