@@ -82,7 +82,17 @@ class _LoginState extends State<Login> {
                   });
                   try {
                     final user = await _auth.signInWithEmailAndPassword(
-                        email: email, password: password);
+                        email: email, password: password).catchError((err) {
+                      showDialog(context: context, builder: (context) {
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content: Text(err.message),
+                          actions: [
+                            ElevatedButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Ok"), ),
+                          ],
+                        );
+                      });
+                    });
 
                     if (user != null) {
                       Navigator.pushNamed(context, MainScreen.page);

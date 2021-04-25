@@ -84,7 +84,13 @@ class _SignUpState extends State<SignUp> {
                   try {
                     final user = await _auth.createUserWithEmailAndPassword(email: email, password: password).catchError((err) {
                       showDialog(context: context, builder: (context) {
-                        return AlertDialog();
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content: Text(err.message),
+                          actions: [
+                            ElevatedButton(onPressed: ()=>Navigator.of(context).pop(), child: Text("Ok"), ),
+                          ],
+                        );
                       });
                     });
 
